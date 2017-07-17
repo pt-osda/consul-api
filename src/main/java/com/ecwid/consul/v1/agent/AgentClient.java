@@ -51,9 +51,15 @@ public interface AgentClient {
 
 	public Response<Void> agentServiceDeregister(String serviceId);
 
+	public Response<Void> agentServiceDeregister(String serviceId, String token);
+
 	public Response<Void> agentServiceSetMaintenance(String serviceId, boolean maintenanceEnabled);
 
 	public Response<Void> agentServiceSetMaintenance(String serviceId, boolean maintenanceEnabled, String reason);
+
+	public Response<Void> agentServiceSetMaintenanceWithToken(String serviceId, boolean maintenanceEnabled, String token);
+
+	public Response<Void> agentServiceSetMaintenanceWithToken(String serviceId, boolean maintenanceEnabled, String reason, String token);
 
 	public Response<Void> agentReload();
 }

@@ -256,16 +256,39 @@ public final class AgentConsulClient implements AgentClient {
 	}
 
 	@Override
+	public Response<Void> agentServiceDeregister(String serviceId, String token) {
+		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
+		RawResponse rawResponse = rawClient.makeGetRequest("/v1/agent/service/deregister/" + serviceId, tokenParam);
+
+		if (rawResponse.getStatusCode() == 200) {
+			return new Response<Void>(null, rawResponse);
+		} else {
+			throw new OperationException(rawResponse);
+		}
+	}
+
+	@Override
 	public Response<Void> agentServiceSetMaintenance(String serviceId, boolean maintenanceEnabled) {
-		return agentServiceSetMaintenance(serviceId, maintenanceEnabled, null);
+		return agentServiceSetMaintenanceWithToken(serviceId, maintenanceEnabled, null,null);
 	}
 
 	@Override
 	public Response<Void> agentServiceSetMaintenance(String serviceId, boolean maintenanceEnabled, String reason) {
+		return agentServiceSetMaintenanceWithToken(serviceId, maintenanceEnabled, reason,null);
+	}
+
+	@Override
+	public Response<Void> agentServiceSetMaintenanceWithToken(String serviceId, boolean maintenanceEnabled, String token){
+		return agentServiceSetMaintenanceWithToken(serviceId, maintenanceEnabled, null,token);
+	}
+
+	@Override
+	public Response<Void> agentServiceSetMaintenanceWithToken(String serviceId, boolean maintenanceEnabled, String reason, String token){
+		UrlParameters tokenParam = token != null ? new SingleUrlParameters("token", token) : null;
 		UrlParameters maintenanceParameter = new SingleUrlParameters("enable", Boolean.toString(maintenanceEnabled));
 		UrlParameters reasonParameter = reason != null ? new SingleUrlParameters("reason", reason) : null;
 
-		RawResponse rawResponse = rawClient.makePutRequest("/v1/agent/service/maintenance/" + serviceId, "", maintenanceParameter, reasonParameter);
+		RawResponse rawResponse = rawClient.makePutRequest("/v1/agent/service/maintenance/" + serviceId, "", maintenanceParameter, reasonParameter, tokenParam);
 
 		if (rawResponse.getStatusCode() == 200) {
 			return new Response<Void>(null, rawResponse);
