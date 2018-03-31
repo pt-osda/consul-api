@@ -4,4 +4,4 @@ jdk:
   - oraclejdk8
   - oraclejdk7
 
-  script: ./gradlew -i
+  script: ./gradlew
