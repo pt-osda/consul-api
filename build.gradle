@@ -96,3 +96,17 @@ if (doUploadArchives) {
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.14.1'
 }
+
+buildscript{
+  repositories{
+    maven {
+      url uri('repo')
+    }
+  }
+  dependencies {
+    classpath group: 'pt.osda', name: 'OSDA-plugin',
+              version: '1.0-SNAPSHOT'
+  }
+}
+
+apply plugin: 'pt.osda.OSDA-plugin'
