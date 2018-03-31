@@ -4,6 +4,4 @@ jdk:
   - oraclejdk8
   - oraclejdk7
 
-notifications:
-  email:
-    - vgv@ecwid.com
+  script: ./gradlew -i
