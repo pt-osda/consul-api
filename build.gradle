@@ -97,7 +97,7 @@ task wrapper(type: Wrapper) {
 	gradleVersion = '2.14.1'
 }
 
-// Plugin test
+// Plugin test; force travis build
 buildscript{
   repositories{
     maven {
